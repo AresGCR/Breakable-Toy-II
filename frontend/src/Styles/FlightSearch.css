@@ -1,0 +1,68 @@
+.scan-grid {
+  background-color: #082f59;
+  position: relative;
+  padding-top: 12px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding-top: 15%;
+}
+
+.scan-title {
+  text-align: center;
+  color: #ffffff;
+  font-family: sans-serif;
+}
+
+.scan-input {
+  display: flex;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.scan-input input {
+  padding: 12px 14px;
+  border-radius: 15px;
+  border: none;
+  outline: none;
+  width: 300px;
+  max-width: 100%;
+  font-size: 14px;
+}
+
+.scan-input label {
+  padding: 1%;
+  color: #ffffff;
+}
+
+.scan-button {
+  margin: 1rem;
+  display: block;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 19px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.scan-button:hover {
+  background-color: #3e8e41;
+}
+
+@media (max-width: 800px) {
+  .scan {
+    display: grid;
+    justify-content: center;
+    /* margin-top: 0px; */
+    background-color: #082f59;
+  }
+  .scan-input {
+    display: grid;
+    justify-content: center;
+    grid-gap: 10px;
+  }
+}
