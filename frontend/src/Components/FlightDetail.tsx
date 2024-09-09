@@ -1,75 +1,81 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
 import "../Styles/FlightDetail.css";
+
+import { useLocation, useNavigate } from "react-router-dom";
+
+// Segment and FlightData interfaces
+interface Segment {
+  departureTime: string;
+  departureAirportCode: string;
+  arrivalTime: string;
+  arrivalAirportCode: string;
+  airlineCode: string;
+  flightNumber: string;
+  operatingAirlineCode: string;
+  aircraftType: string;
+}
+
+interface FlightData {
+  id: number;
+  initialDepartureTime: string;
+  finalArrivalTime: string;
+  departureAirportCode: string;
+  arrivalAirportCode: string;
+  airlineCode: string;
+  operatingAirlineCode: string;
+  totalDuration: string;
+  totalPrice: number;
+  pricePerTraveler: number;
+  segments: Segment[];
+}
 
 export default function FlightDetail() {
   const location = useLocation();
-  const flight = location.state?.flight;
+  const navigate = useNavigate();
+
+  // Extract flight data from location state
+  const flight = location.state?.flight as FlightData | undefined;
 
   if (!flight) {
-    return <div>No flight data available.</div>;
+    return <div>No flight data available. Please select a flight from the list.</div>;
   }
 
   return (
-    <section className="flight-detail-container">
-      <div className="flight-detail-box">
-        <h3>
-          {flight.airlineName} ({flight.airlineCode})
-        </h3>
-        {flight.operatingAirlineName &&
-          flight.operatingAirlineName !== flight.airlineName && (
-            <p>
-              Operating Airline: {flight.operatingAirlineName} (
-              {flight.operatingAirlineCode})
-            </p>
-          )}
-        <p>
-          Departure: {flight.departureAirportName} (
-          {flight.departureAirportCode}) at{" "}
-          {new Date(flight.initialDepartureDateTime).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
-        </p>
-        <p>
-          Arrival: {flight.arrivalAirportName} (
-          {flight.arrivalAirportCode}) at{" "}
-          {new Date(flight.finalArrivalDateTime).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
-        </p>
-        <p>Total Duration: {flight.totalFlightDuration}</p>
-        <h3>Segments</h3>
-        {flight.segments.map((segment: any, index: number) => (
-          <div key={index} className="segment">
-            <h4>Segment {index + 1}</h4>
-            <p>
-              {segment.departureAirportCode} to {segment.arrivalAirportCode}
-            </p>
-            <p>
-              Flight: {segment.flightNumber} ({segment.airlineCode}), Aircraft:{" "}
-              {segment.aircraftType}
-            </p>
-            <p>
-              Departure Time:{" "}
-              {new Date(segment.departureTime).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </p>
-            <p>
-              Arrival Time:{" "}
-              {new Date(segment.arrivalTime).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </p>
+    <div className="flight-detail-container">
+      {/* Left Section for Segments */}
+      <div className="flight-segment-section">
+        {flight.segments.map((segment: Segment, index: number) => (
+          <div key={index} className="segment-box">
+            <div className="segment-header">Segment {index + 1}</div>
+            <div className="segment-info">
+              {new Date(segment.departureTime).toLocaleDateString()} {new Date(segment.departureTime).toLocaleTimeString()} - {new Date(segment.arrivalTime).toLocaleDateString()} {new Date(segment.arrivalTime).toLocaleTimeString()}
+            </div>
+            <div className="segment-info">
+              {segment.departureAirportCode} ({segment.departureAirportCode}) - {segment.arrivalAirportCode} ({segment.arrivalAirportCode})
+            </div>
+            <div className="segment-info">
+              {segment.airlineCode} ({segment.flightNumber})
+            </div>
+            <div className="travelers-fare-details">Travelers fare details</div>
           </div>
         ))}
-        <p>Total Price: {flight.totalPrice !== null ? `$${flight.totalPrice} USD` : "N/A"}</p>
-        <p>Price per Traveler: {flight.pricePerTraveler !== null ? `$${flight.pricePerTraveler} USD` : "N/A"}</p>
       </div>
-    </section>
+
+      {/* Right Section for Pricing */}
+      <div className="pricing-section">
+        <div className="price-breakdown">
+          <div className="price-breakdown-title">Price Breakdown</div>
+          <div className="price-breakdown-item">Base: </div>
+          <div className="price-breakdown-item">Fees: </div>
+          <div className="price-breakdown-item">Total: {flight.totalPrice}</div>
+          
+          {/* Per Traveler Box inside Price Breakdown */}
+          <div className="per-traveler-details">
+            <strong>Per Traveler:</strong> {flight.pricePerTraveler}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
+
+

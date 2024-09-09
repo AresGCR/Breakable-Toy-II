@@ -1,24 +1,109 @@
+.return-button, .pagination-controls button {
+  background-color: #4caf50; /* Same background color */
+  color: white;
+  border: none;
+  border-radius: 10px; /* Slightly rounded corners */
+  padding: 10px 20px; /* Same padding */
+  font-size: 16px; /* Same font size */
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.return-button:hover, .pagination-controls button:hover {
+  background-color: #3e8e41; /* Same hover effect */
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-controls button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
 .flight-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column; /* Stacks flight boxes vertically */
+  align-items: center; /* Centers the flight boxes */
   padding-top: 3%;
+}
+
+.middle-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center content */
+  align-items: center; /* Horizontally center content */
+  text-align: center;
+  margin-top: 20px; /* Adjust as needed */
+}
+
+.flight-duration, .stop {
+  font-size: 1.2rem; /* Set the same size for both */
+  margin-bottom: 10px; /* Space between duration and stops */
+}
+
+.stop {
+  margin-bottom: 0; /* Removes extra margin below the stop */
 }
 
 .flight-box {
   border: 1px solid #ffffff;
   border-radius: 20px;
   padding: 20px;
-  width: 600px;
+  width: 900px; /* Keep the width fixed for consistent look */
+  min-height: 150px; /* Increased minimum height to make the flight box longer */
   background-color: #093c72;
   color: #ffffff;
-  margin: 15px;
+  margin: 15px 0; /* Vertical margin for better spacing */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.flight-box h3 {
-  margin-bottom: 10px;
-  font-size: 1.5rem;
-  font-weight: 100;
+.flight-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flight-info span {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.route-info {
+  margin-top: 10px;
+}
+
+.stop-details {
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.price-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Align price info to the right side of the flight box */
+  margin-top: 20px; /* Optional: space between middle section and price info */
+}
+
+.total-price, .price-per-traveler {
+  font-size: 1.2rem;
+  margin-bottom: 5px; /* Space between total price and price per traveler */
+}
+
+.total-price span, .price-per-traveler span {
+  font-size: 1.2rem;
+}
+
+.airline-info {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 .flight-box button {
@@ -29,6 +114,7 @@
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
+  margin-top: 15px;
 }
 
 .flight-box button:hover {

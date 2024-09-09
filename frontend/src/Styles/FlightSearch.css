@@ -1,3 +1,32 @@
+
+.input-with-dropdown {
+  position: relative;
+}
+
+.dropdown-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-options li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-options li:hover {
+  background-color: #f0f0f0;
+}
+
 .scan-grid {
   background-color: #082f59;
   position: relative;
@@ -18,7 +47,9 @@
 
 .scan-input {
   display: flex;
+  flex-direction: column; /* Stack form elements vertically */
   justify-content: center;
+  align-items: center;
   padding: 3rem;
 }
 
@@ -30,11 +61,33 @@
   width: 300px;
   max-width: 100%;
   font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.scan-input select {
+  padding: 12px 14px;
+  border-radius: 15px;
+  border: none;
+  outline: none;
+  width: 300px;
+  max-width: 100%;
+  font-size: 14px;
+  margin-bottom: 15px;
 }
 
 .scan-input label {
   padding: 1%;
   color: #ffffff;
+  margin-top: 10px;
+}
+
+.nonstop-checkbox {
+  margin-top: 15px;
+  display: flex; /* Ensure the label and checkbox are inline */
+  justify-content: center; /* Center the label and checkbox horizontally */
+  align-items: center; /* Align the checkbox and text vertically */
+  width: 300px;
+  margin-left: 270px; /* Moves the checkbox and label slightly to the right */
 }
 
 .scan-button {
@@ -53,11 +106,16 @@
   background-color: #3e8e41;
 }
 
+.error-message {
+  color: red;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
 @media (max-width: 800px) {
   .scan {
     display: grid;
     justify-content: center;
-    /* margin-top: 0px; */
     background-color: #082f59;
   }
   .scan-input {
@@ -66,3 +124,5 @@
     grid-gap: 10px;
   }
 }
+
+

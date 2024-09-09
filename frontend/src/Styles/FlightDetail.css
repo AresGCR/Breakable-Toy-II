@@ -1,54 +1,75 @@
 .flight-detail-container {
     display: flex;
-    justify-content: center;
-    padding-top: 5%;
+    justify-content: space-between;
+    padding: 20px;
+    font-family: Arial, sans-serif;
   }
   
-  .flight-detail-box {
-    border: 1px solid #ffffff;
-    border-radius: 20px;
-    padding: 30px;
-    width: 700px;
-    background-color: #093c72;
-    color: #ffffff;
-    margin: 15px;
+  .flight-segment-section {
+    width: 70%;
   }
   
-  .flight-detail-box h3 {
+  .segment-box {
+    background-color: #093c72; /* Background color for segments */
+    color: #ffffff; /* White text for better contrast */
+    border: 1px solid #000;
+    border-radius: 8px;
+    padding: 20px;
     margin-bottom: 15px;
-    font-size: 1.8rem;
-    font-weight: 100;
   }
   
-  .flight-detail-box p {
-    margin: 5px 0;
-    font-size: 1.2rem;
-  }
-  
-  .flight-detail-box .segment {
-    margin: 20px 0;
-    padding: 15px;
-    background-color: #0c4a9b;
-    border-radius: 15px;
-  }
-  
-  .flight-detail-box .segment h4 {
-    margin-bottom: 10px;
-    font-size: 1.3rem;
-  }
-  
-  .flight-detail-box button {
-    background-color: #ffffff;
-    color: #093c72;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
+  .segment-header {
     font-weight: bold;
+    margin-bottom: 10px;
   }
   
-  .flight-detail-box button:hover {
-    background-color: #d0daee;
-    color: #093c72;
+  .segment-info {
+    margin-bottom: 5px;
   }
+  
+  .travelers-fare-details {
+    background-color: #ffffff; /* Set the background to white */
+    color: #000000; /* Ensure the text is dark for readability */
+    border: 1px solid #000;
+    border-radius: 8px;
+    padding: 20px;
+    width: 200px;
+    height: 150px;
+  }
+  
+  .pricing-section {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .price-breakdown {
+    background-color: #4caf50; /* Green background color for price box */
+    color: #ffffff; /* White text for contrast */
+    border: 1px solid #000;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Ensure that items are stacked vertically */
+    justify-content: space-between;
+  }
+  
+  .price-breakdown-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .price-breakdown-item {
+    margin-bottom: 5px;
+  }
+  
+  .per-traveler-details {
+    background-color: #ffffff; /* White background for Per Traveler box */
+    color: #000000; /* Ensure the text is dark for readability */
+    border: 1px solid #000;
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 10px; /* Adds some space above the Per Traveler box */
+  }
+  
   

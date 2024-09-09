@@ -9,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<FlightSearch />} />
         <Route path="/flights" element={<Flights />} />
+        {/* FlightDetail route does not need the ID in the URL */}
         <Route path="/flight-detail" element={<FlightDetail />} />
       </Routes>
     </div>
