@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.java.flightservice.FlightAPI.Entity.FlightSegment;
 import com.java.flightservice.FlightAPI.Entity.FlightSummary;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +19,18 @@ public class MockAmadeusApiService {
         this.flightSummaries = new ArrayList<>(); // Initialize as an empty list
         this.flightSummaries = getData();
     }
+
+
+    public List<FlightSummary> getPaginatedData(int page, int size) {
+        if (flightSummaries == null || flightSummaries.isEmpty()) {
+            return new ArrayList<>();
+        }
+        int start = Math.min(page * size, flightSummaries.size());
+        int end = Math.min((page + 1) * size, flightSummaries.size());
+
+
+        return flightSummaries.subList(start, end);
+    }
     public List<FlightSummary> getData() {
         try {
             // Reading the JSON file
@@ -34,6 +45,11 @@ public class MockAmadeusApiService {
 
                 // Extracting summary data
                 FlightSummary flightSummary = new FlightSummary();
+
+                // Parse the flight ID
+                long flightId = flightOffer.has("id") ? flightOffer.get("id").getAsLong() : 0L;
+                flightSummary.setId(flightId); // Store the id in the FlightSummary
+
                 JsonArray itineraries = flightOffer.getAsJsonArray("itineraries");
                 JsonObject firstItinerary = itineraries != null && itineraries.size() > 0 ? itineraries.get(0).getAsJsonObject() : null;
                 if (firstItinerary == null) {
@@ -52,9 +68,9 @@ public class MockAmadeusApiService {
                         firstSegment.getAsJsonObject("departure").get("at").getAsString());
                 flightSummary.setFinalArrivalTime(
                         lastSegment.getAsJsonObject("arrival").get("at").getAsString());
-                flightSummary.setInitialDepartureAirportCode(
+                flightSummary.setDepartureAirportCode(
                         firstSegment.getAsJsonObject("departure").get("iataCode").getAsString());
-                flightSummary.setFinalArrivalAirportCode(
+                flightSummary.setArrivalAirportCode(
                         lastSegment.getAsJsonObject("arrival").get("iataCode").getAsString());
 
                 // Handling Airline Code and Name
@@ -67,17 +83,30 @@ public class MockAmadeusApiService {
                 }
 
                 // Handle remaining fields with necessary checks
-                flightSummary.setInitialDepartureAirportName("Unknown");
-                flightSummary.setFinalArrivalAirportName("Unknown");
-                flightSummary.setAirlineName("Unknown");
-                flightSummary.setOperatingAirlineName("Unknown");
                 flightSummary.setTotalDuration(firstItinerary.get("duration").getAsString());
 
+                // Extract price data (if available)
+                JsonObject price = flightOffer.has("price") ? flightOffer.getAsJsonObject("price") : null;
+                if (price != null) {
+                    flightSummary.setTotalPrice(price.get("grandTotal").getAsDouble());
+                } else {
+                    flightSummary.setTotalPrice(0.0); // or set to a default value
+                }
+
+                // Extract traveler pricing data
+                JsonArray travelerPricings = flightOffer.getAsJsonArray("travelerPricings");
+                if (travelerPricings != null && travelerPricings.size() > 0) {
+                    JsonObject travelerPricing = travelerPricings.get(0).getAsJsonObject();
+                    flightSummary.setPricePerTraveler(travelerPricing.getAsJsonObject("price").get("total").getAsDouble());
+                } else {
+                    flightSummary.setPricePerTraveler(0.0); // or set to a default value
+                }
+
                 // Extract segments
-                List<FlightSegment> flightSegments = new ArrayList<>();
+                List<FlightSummary.Segment> flightSegments = new ArrayList<>();
                 for (int j = 0; j < segments.size(); j++) {
                     JsonObject segment = segments.get(j).getAsJsonObject();
-                    FlightSegment flightSegment = new FlightSegment();
+                    FlightSummary.Segment flightSegment = new FlightSummary.Segment();
 
                     flightSegment.setDepartureAirportCode(
                             segment.getAsJsonObject("departure").get("iataCode").getAsString());
@@ -118,5 +147,4 @@ public class MockAmadeusApiService {
             return null;
         }
     }
-
 }
